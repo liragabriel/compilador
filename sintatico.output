@@ -1,0 +1,555 @@
+Terminais sem uso na gramática
+
+   TKN_MAS
+   TKN_MENOS
+   TKN_MULT
+   TKN_DIV
+
+
+Estado 5 conflitos: 1 de deslocamento/redução
+Estado 28 conflitos: 6 de deslocamento/redução
+Estado 29 conflitos: 6 de deslocamento/redução
+Estado 30 conflitos: 6 de deslocamento/redução
+Estado 31 conflitos: 6 de deslocamento/redução
+Estado 32 conflitos: 6 de deslocamento/redução
+
+
+Gramática
+
+    0 $accept: Calculadora $end
+
+    1 $@1: %empty
+
+    2 Calculadora: TKN_ID $@1 TKN_ATRIBUICAO Expressao TKN_PONTOEVIRGULA
+    3            | Calculadora Calculadora
+
+    4 Expressao: TKN_NUM
+    5          | Expressao TKN_ADICAO Expressao
+    6          | Expressao TKN_SUBTRACAO Expressao
+    7          | Expressao TKN_MULTIPLICACAO Expressao
+    8          | Expressao TKN_DIVISAO Expressao
+    9          | Expressao TKN_POTENCIA Expressao
+   10          | Expressao TKN_FATORIAL
+   11          | TKN_PAA Expressao TKN_PAF
+   12          | TKN_RAIZ TKN_PAA Expressao TKN_PAF
+   13          | TKN_COS TKN_PAA Expressao TKN_PAF
+   14          | TKN_SEN TKN_PAA Expressao TKN_PAF
+
+
+Terminais, com as regras onde eles aparecem
+
+$end (0) 0
+error (256)
+TKN_NUM (258) 4
+TKN_ATRIBUICAO (259) 2
+TKN_PONTOEVIRGULA (260) 2
+TKN_MULTIPLICACAO (261) 7
+TKN_DIVISAO (262) 8
+TKN_ADICAO (263) 5
+TKN_SUBTRACAO (264) 6
+TKN_PAA (265) 11 12 13 14
+TKN_PAF (266) 11 12 13 14
+TKN_COS (267) 13
+TKN_SEN (268) 14
+TKN_POTENCIA (269) 9
+TKN_RAIZ (270) 12
+TKN_FATORIAL (271) 10
+TKN_ID (272) 2
+TKN_MAS (273)
+TKN_MENOS (274)
+TKN_MULT (275)
+TKN_DIV (276)
+
+
+Não terminais com as regras onde eles aparecem
+
+$accept (22)
+    à esquerda: 0
+Calculadora (23)
+    à esquerda: 2 3, à direita: 0 3
+$@1 (24)
+    à esquerda: 1, à direita: 2
+Expressao (25)
+    à esquerda: 4 5 6 7 8 9 10 11 12 13 14, à direita: 2 5 6 7 8
+    9 10 11 12 13 14
+
+
+Estado 0
+
+    0 $accept: . Calculadora $end
+
+    TKN_ID  deslocar, e ir ao estado 1
+
+    Calculadora  ir ao estado 2
+
+
+Estado 1
+
+    2 Calculadora: TKN_ID . $@1 TKN_ATRIBUICAO Expressao TKN_PONTOEVIRGULA
+
+    $padrão  reduzir usando a regra 1 ($@1)
+
+    $@1  ir ao estado 3
+
+
+Estado 2
+
+    0 $accept: Calculadora . $end
+    3 Calculadora: Calculadora . Calculadora
+
+    $end    deslocar, e ir ao estado 4
+    TKN_ID  deslocar, e ir ao estado 1
+
+    Calculadora  ir ao estado 5
+
+
+Estado 3
+
+    2 Calculadora: TKN_ID $@1 . TKN_ATRIBUICAO Expressao TKN_PONTOEVIRGULA
+
+    TKN_ATRIBUICAO  deslocar, e ir ao estado 6
+
+
+Estado 4
+
+    0 $accept: Calculadora $end .
+
+    $padrão  aceitar
+
+
+Estado 5
+
+    3 Calculadora: Calculadora . Calculadora
+    3            | Calculadora Calculadora .
+
+    TKN_ID  deslocar, e ir ao estado 1
+
+    TKN_ID    [reduzir usando a regra 3 (Calculadora)]
+    $padrão  reduzir usando a regra 3 (Calculadora)
+
+    Calculadora  ir ao estado 5
+
+
+Estado 6
+
+    2 Calculadora: TKN_ID $@1 TKN_ATRIBUICAO . Expressao TKN_PONTOEVIRGULA
+
+    TKN_NUM   deslocar, e ir ao estado 7
+    TKN_PAA   deslocar, e ir ao estado 8
+    TKN_COS   deslocar, e ir ao estado 9
+    TKN_SEN   deslocar, e ir ao estado 10
+    TKN_RAIZ  deslocar, e ir ao estado 11
+
+    Expressao  ir ao estado 12
+
+
+Estado 7
+
+    4 Expressao: TKN_NUM .
+
+    $padrão  reduzir usando a regra 4 (Expressao)
+
+
+Estado 8
+
+   11 Expressao: TKN_PAA . Expressao TKN_PAF
+
+    TKN_NUM   deslocar, e ir ao estado 7
+    TKN_PAA   deslocar, e ir ao estado 8
+    TKN_COS   deslocar, e ir ao estado 9
+    TKN_SEN   deslocar, e ir ao estado 10
+    TKN_RAIZ  deslocar, e ir ao estado 11
+
+    Expressao  ir ao estado 13
+
+
+Estado 9
+
+   13 Expressao: TKN_COS . TKN_PAA Expressao TKN_PAF
+
+    TKN_PAA  deslocar, e ir ao estado 14
+
+
+Estado 10
+
+   14 Expressao: TKN_SEN . TKN_PAA Expressao TKN_PAF
+
+    TKN_PAA  deslocar, e ir ao estado 15
+
+
+Estado 11
+
+   12 Expressao: TKN_RAIZ . TKN_PAA Expressao TKN_PAF
+
+    TKN_PAA  deslocar, e ir ao estado 16
+
+
+Estado 12
+
+    2 Calculadora: TKN_ID $@1 TKN_ATRIBUICAO Expressao . TKN_PONTOEVIRGULA
+    5 Expressao: Expressao . TKN_ADICAO Expressao
+    6          | Expressao . TKN_SUBTRACAO Expressao
+    7          | Expressao . TKN_MULTIPLICACAO Expressao
+    8          | Expressao . TKN_DIVISAO Expressao
+    9          | Expressao . TKN_POTENCIA Expressao
+   10          | Expressao . TKN_FATORIAL
+
+    TKN_PONTOEVIRGULA  deslocar, e ir ao estado 17
+    TKN_MULTIPLICACAO  deslocar, e ir ao estado 18
+    TKN_DIVISAO        deslocar, e ir ao estado 19
+    TKN_ADICAO         deslocar, e ir ao estado 20
+    TKN_SUBTRACAO      deslocar, e ir ao estado 21
+    TKN_POTENCIA       deslocar, e ir ao estado 22
+    TKN_FATORIAL       deslocar, e ir ao estado 23
+
+
+Estado 13
+
+    5 Expressao: Expressao . TKN_ADICAO Expressao
+    6          | Expressao . TKN_SUBTRACAO Expressao
+    7          | Expressao . TKN_MULTIPLICACAO Expressao
+    8          | Expressao . TKN_DIVISAO Expressao
+    9          | Expressao . TKN_POTENCIA Expressao
+   10          | Expressao . TKN_FATORIAL
+   11          | TKN_PAA Expressao . TKN_PAF
+
+    TKN_MULTIPLICACAO  deslocar, e ir ao estado 18
+    TKN_DIVISAO        deslocar, e ir ao estado 19
+    TKN_ADICAO         deslocar, e ir ao estado 20
+    TKN_SUBTRACAO      deslocar, e ir ao estado 21
+    TKN_PAF            deslocar, e ir ao estado 24
+    TKN_POTENCIA       deslocar, e ir ao estado 22
+    TKN_FATORIAL       deslocar, e ir ao estado 23
+
+
+Estado 14
+
+   13 Expressao: TKN_COS TKN_PAA . Expressao TKN_PAF
+
+    TKN_NUM   deslocar, e ir ao estado 7
+    TKN_PAA   deslocar, e ir ao estado 8
+    TKN_COS   deslocar, e ir ao estado 9
+    TKN_SEN   deslocar, e ir ao estado 10
+    TKN_RAIZ  deslocar, e ir ao estado 11
+
+    Expressao  ir ao estado 25
+
+
+Estado 15
+
+   14 Expressao: TKN_SEN TKN_PAA . Expressao TKN_PAF
+
+    TKN_NUM   deslocar, e ir ao estado 7
+    TKN_PAA   deslocar, e ir ao estado 8
+    TKN_COS   deslocar, e ir ao estado 9
+    TKN_SEN   deslocar, e ir ao estado 10
+    TKN_RAIZ  deslocar, e ir ao estado 11
+
+    Expressao  ir ao estado 26
+
+
+Estado 16
+
+   12 Expressao: TKN_RAIZ TKN_PAA . Expressao TKN_PAF
+
+    TKN_NUM   deslocar, e ir ao estado 7
+    TKN_PAA   deslocar, e ir ao estado 8
+    TKN_COS   deslocar, e ir ao estado 9
+    TKN_SEN   deslocar, e ir ao estado 10
+    TKN_RAIZ  deslocar, e ir ao estado 11
+
+    Expressao  ir ao estado 27
+
+
+Estado 17
+
+    2 Calculadora: TKN_ID $@1 TKN_ATRIBUICAO Expressao TKN_PONTOEVIRGULA .
+
+    $padrão  reduzir usando a regra 2 (Calculadora)
+
+
+Estado 18
+
+    7 Expressao: Expressao TKN_MULTIPLICACAO . Expressao
+
+    TKN_NUM   deslocar, e ir ao estado 7
+    TKN_PAA   deslocar, e ir ao estado 8
+    TKN_COS   deslocar, e ir ao estado 9
+    TKN_SEN   deslocar, e ir ao estado 10
+    TKN_RAIZ  deslocar, e ir ao estado 11
+
+    Expressao  ir ao estado 28
+
+
+Estado 19
+
+    8 Expressao: Expressao TKN_DIVISAO . Expressao
+
+    TKN_NUM   deslocar, e ir ao estado 7
+    TKN_PAA   deslocar, e ir ao estado 8
+    TKN_COS   deslocar, e ir ao estado 9
+    TKN_SEN   deslocar, e ir ao estado 10
+    TKN_RAIZ  deslocar, e ir ao estado 11
+
+    Expressao  ir ao estado 29
+
+
+Estado 20
+
+    5 Expressao: Expressao TKN_ADICAO . Expressao
+
+    TKN_NUM   deslocar, e ir ao estado 7
+    TKN_PAA   deslocar, e ir ao estado 8
+    TKN_COS   deslocar, e ir ao estado 9
+    TKN_SEN   deslocar, e ir ao estado 10
+    TKN_RAIZ  deslocar, e ir ao estado 11
+
+    Expressao  ir ao estado 30
+
+
+Estado 21
+
+    6 Expressao: Expressao TKN_SUBTRACAO . Expressao
+
+    TKN_NUM   deslocar, e ir ao estado 7
+    TKN_PAA   deslocar, e ir ao estado 8
+    TKN_COS   deslocar, e ir ao estado 9
+    TKN_SEN   deslocar, e ir ao estado 10
+    TKN_RAIZ  deslocar, e ir ao estado 11
+
+    Expressao  ir ao estado 31
+
+
+Estado 22
+
+    9 Expressao: Expressao TKN_POTENCIA . Expressao
+
+    TKN_NUM   deslocar, e ir ao estado 7
+    TKN_PAA   deslocar, e ir ao estado 8
+    TKN_COS   deslocar, e ir ao estado 9
+    TKN_SEN   deslocar, e ir ao estado 10
+    TKN_RAIZ  deslocar, e ir ao estado 11
+
+    Expressao  ir ao estado 32
+
+
+Estado 23
+
+   10 Expressao: Expressao TKN_FATORIAL .
+
+    $padrão  reduzir usando a regra 10 (Expressao)
+
+
+Estado 24
+
+   11 Expressao: TKN_PAA Expressao TKN_PAF .
+
+    $padrão  reduzir usando a regra 11 (Expressao)
+
+
+Estado 25
+
+    5 Expressao: Expressao . TKN_ADICAO Expressao
+    6          | Expressao . TKN_SUBTRACAO Expressao
+    7          | Expressao . TKN_MULTIPLICACAO Expressao
+    8          | Expressao . TKN_DIVISAO Expressao
+    9          | Expressao . TKN_POTENCIA Expressao
+   10          | Expressao . TKN_FATORIAL
+   13          | TKN_COS TKN_PAA Expressao . TKN_PAF
+
+    TKN_MULTIPLICACAO  deslocar, e ir ao estado 18
+    TKN_DIVISAO        deslocar, e ir ao estado 19
+    TKN_ADICAO         deslocar, e ir ao estado 20
+    TKN_SUBTRACAO      deslocar, e ir ao estado 21
+    TKN_PAF            deslocar, e ir ao estado 33
+    TKN_POTENCIA       deslocar, e ir ao estado 22
+    TKN_FATORIAL       deslocar, e ir ao estado 23
+
+
+Estado 26
+
+    5 Expressao: Expressao . TKN_ADICAO Expressao
+    6          | Expressao . TKN_SUBTRACAO Expressao
+    7          | Expressao . TKN_MULTIPLICACAO Expressao
+    8          | Expressao . TKN_DIVISAO Expressao
+    9          | Expressao . TKN_POTENCIA Expressao
+   10          | Expressao . TKN_FATORIAL
+   14          | TKN_SEN TKN_PAA Expressao . TKN_PAF
+
+    TKN_MULTIPLICACAO  deslocar, e ir ao estado 18
+    TKN_DIVISAO        deslocar, e ir ao estado 19
+    TKN_ADICAO         deslocar, e ir ao estado 20
+    TKN_SUBTRACAO      deslocar, e ir ao estado 21
+    TKN_PAF            deslocar, e ir ao estado 34
+    TKN_POTENCIA       deslocar, e ir ao estado 22
+    TKN_FATORIAL       deslocar, e ir ao estado 23
+
+
+Estado 27
+
+    5 Expressao: Expressao . TKN_ADICAO Expressao
+    6          | Expressao . TKN_SUBTRACAO Expressao
+    7          | Expressao . TKN_MULTIPLICACAO Expressao
+    8          | Expressao . TKN_DIVISAO Expressao
+    9          | Expressao . TKN_POTENCIA Expressao
+   10          | Expressao . TKN_FATORIAL
+   12          | TKN_RAIZ TKN_PAA Expressao . TKN_PAF
+
+    TKN_MULTIPLICACAO  deslocar, e ir ao estado 18
+    TKN_DIVISAO        deslocar, e ir ao estado 19
+    TKN_ADICAO         deslocar, e ir ao estado 20
+    TKN_SUBTRACAO      deslocar, e ir ao estado 21
+    TKN_PAF            deslocar, e ir ao estado 35
+    TKN_POTENCIA       deslocar, e ir ao estado 22
+    TKN_FATORIAL       deslocar, e ir ao estado 23
+
+
+Estado 28
+
+    5 Expressao: Expressao . TKN_ADICAO Expressao
+    6          | Expressao . TKN_SUBTRACAO Expressao
+    7          | Expressao . TKN_MULTIPLICACAO Expressao
+    7          | Expressao TKN_MULTIPLICACAO Expressao .
+    8          | Expressao . TKN_DIVISAO Expressao
+    9          | Expressao . TKN_POTENCIA Expressao
+   10          | Expressao . TKN_FATORIAL
+
+    TKN_MULTIPLICACAO  deslocar, e ir ao estado 18
+    TKN_DIVISAO        deslocar, e ir ao estado 19
+    TKN_ADICAO         deslocar, e ir ao estado 20
+    TKN_SUBTRACAO      deslocar, e ir ao estado 21
+    TKN_POTENCIA       deslocar, e ir ao estado 22
+    TKN_FATORIAL       deslocar, e ir ao estado 23
+
+    TKN_MULTIPLICACAO  [reduzir usando a regra 7 (Expressao)]
+    TKN_DIVISAO        [reduzir usando a regra 7 (Expressao)]
+    TKN_ADICAO         [reduzir usando a regra 7 (Expressao)]
+    TKN_SUBTRACAO      [reduzir usando a regra 7 (Expressao)]
+    TKN_POTENCIA       [reduzir usando a regra 7 (Expressao)]
+    TKN_FATORIAL       [reduzir usando a regra 7 (Expressao)]
+    $padrão           reduzir usando a regra 7 (Expressao)
+
+
+Estado 29
+
+    5 Expressao: Expressao . TKN_ADICAO Expressao
+    6          | Expressao . TKN_SUBTRACAO Expressao
+    7          | Expressao . TKN_MULTIPLICACAO Expressao
+    8          | Expressao . TKN_DIVISAO Expressao
+    8          | Expressao TKN_DIVISAO Expressao .
+    9          | Expressao . TKN_POTENCIA Expressao
+   10          | Expressao . TKN_FATORIAL
+
+    TKN_MULTIPLICACAO  deslocar, e ir ao estado 18
+    TKN_DIVISAO        deslocar, e ir ao estado 19
+    TKN_ADICAO         deslocar, e ir ao estado 20
+    TKN_SUBTRACAO      deslocar, e ir ao estado 21
+    TKN_POTENCIA       deslocar, e ir ao estado 22
+    TKN_FATORIAL       deslocar, e ir ao estado 23
+
+    TKN_MULTIPLICACAO  [reduzir usando a regra 8 (Expressao)]
+    TKN_DIVISAO        [reduzir usando a regra 8 (Expressao)]
+    TKN_ADICAO         [reduzir usando a regra 8 (Expressao)]
+    TKN_SUBTRACAO      [reduzir usando a regra 8 (Expressao)]
+    TKN_POTENCIA       [reduzir usando a regra 8 (Expressao)]
+    TKN_FATORIAL       [reduzir usando a regra 8 (Expressao)]
+    $padrão           reduzir usando a regra 8 (Expressao)
+
+
+Estado 30
+
+    5 Expressao: Expressao . TKN_ADICAO Expressao
+    5          | Expressao TKN_ADICAO Expressao .
+    6          | Expressao . TKN_SUBTRACAO Expressao
+    7          | Expressao . TKN_MULTIPLICACAO Expressao
+    8          | Expressao . TKN_DIVISAO Expressao
+    9          | Expressao . TKN_POTENCIA Expressao
+   10          | Expressao . TKN_FATORIAL
+
+    TKN_MULTIPLICACAO  deslocar, e ir ao estado 18
+    TKN_DIVISAO        deslocar, e ir ao estado 19
+    TKN_ADICAO         deslocar, e ir ao estado 20
+    TKN_SUBTRACAO      deslocar, e ir ao estado 21
+    TKN_POTENCIA       deslocar, e ir ao estado 22
+    TKN_FATORIAL       deslocar, e ir ao estado 23
+
+    TKN_MULTIPLICACAO  [reduzir usando a regra 5 (Expressao)]
+    TKN_DIVISAO        [reduzir usando a regra 5 (Expressao)]
+    TKN_ADICAO         [reduzir usando a regra 5 (Expressao)]
+    TKN_SUBTRACAO      [reduzir usando a regra 5 (Expressao)]
+    TKN_POTENCIA       [reduzir usando a regra 5 (Expressao)]
+    TKN_FATORIAL       [reduzir usando a regra 5 (Expressao)]
+    $padrão           reduzir usando a regra 5 (Expressao)
+
+
+Estado 31
+
+    5 Expressao: Expressao . TKN_ADICAO Expressao
+    6          | Expressao . TKN_SUBTRACAO Expressao
+    6          | Expressao TKN_SUBTRACAO Expressao .
+    7          | Expressao . TKN_MULTIPLICACAO Expressao
+    8          | Expressao . TKN_DIVISAO Expressao
+    9          | Expressao . TKN_POTENCIA Expressao
+   10          | Expressao . TKN_FATORIAL
+
+    TKN_MULTIPLICACAO  deslocar, e ir ao estado 18
+    TKN_DIVISAO        deslocar, e ir ao estado 19
+    TKN_ADICAO         deslocar, e ir ao estado 20
+    TKN_SUBTRACAO      deslocar, e ir ao estado 21
+    TKN_POTENCIA       deslocar, e ir ao estado 22
+    TKN_FATORIAL       deslocar, e ir ao estado 23
+
+    TKN_MULTIPLICACAO  [reduzir usando a regra 6 (Expressao)]
+    TKN_DIVISAO        [reduzir usando a regra 6 (Expressao)]
+    TKN_ADICAO         [reduzir usando a regra 6 (Expressao)]
+    TKN_SUBTRACAO      [reduzir usando a regra 6 (Expressao)]
+    TKN_POTENCIA       [reduzir usando a regra 6 (Expressao)]
+    TKN_FATORIAL       [reduzir usando a regra 6 (Expressao)]
+    $padrão           reduzir usando a regra 6 (Expressao)
+
+
+Estado 32
+
+    5 Expressao: Expressao . TKN_ADICAO Expressao
+    6          | Expressao . TKN_SUBTRACAO Expressao
+    7          | Expressao . TKN_MULTIPLICACAO Expressao
+    8          | Expressao . TKN_DIVISAO Expressao
+    9          | Expressao . TKN_POTENCIA Expressao
+    9          | Expressao TKN_POTENCIA Expressao .
+   10          | Expressao . TKN_FATORIAL
+
+    TKN_MULTIPLICACAO  deslocar, e ir ao estado 18
+    TKN_DIVISAO        deslocar, e ir ao estado 19
+    TKN_ADICAO         deslocar, e ir ao estado 20
+    TKN_SUBTRACAO      deslocar, e ir ao estado 21
+    TKN_POTENCIA       deslocar, e ir ao estado 22
+    TKN_FATORIAL       deslocar, e ir ao estado 23
+
+    TKN_MULTIPLICACAO  [reduzir usando a regra 9 (Expressao)]
+    TKN_DIVISAO        [reduzir usando a regra 9 (Expressao)]
+    TKN_ADICAO         [reduzir usando a regra 9 (Expressao)]
+    TKN_SUBTRACAO      [reduzir usando a regra 9 (Expressao)]
+    TKN_POTENCIA       [reduzir usando a regra 9 (Expressao)]
+    TKN_FATORIAL       [reduzir usando a regra 9 (Expressao)]
+    $padrão           reduzir usando a regra 9 (Expressao)
+
+
+Estado 33
+
+   13 Expressao: TKN_COS TKN_PAA Expressao TKN_PAF .
+
+    $padrão  reduzir usando a regra 13 (Expressao)
+
+
+Estado 34
+
+   14 Expressao: TKN_SEN TKN_PAA Expressao TKN_PAF .
+
+    $padrão  reduzir usando a regra 14 (Expressao)
+
+
+Estado 35
+
+   12 Expressao: TKN_RAIZ TKN_PAA Expressao TKN_PAF .
+
+    $padrão  reduzir usando a regra 12 (Expressao)
